@@ -1,0 +1,86 @@
+{
+  "s1": {
+    "question": "give me the full expense claim process as well as the limit each item should follow",
+    "note": "Sample corpus. A claim with a sub-process in capitals (TRAVEL REQUEST), a later change (2023) and requested parts.",
+    "required": {
+      "limit_hotel": "180",
+      "limit_meals": "60\\s*(?:dollars|\\$)|\\$\\s*60",
+      "receipt_limit": "25\\s*(?:dollars|\\$)|\\$\\s*25",
+      "submit_in_tool": "expense tool",
+      "hotel_cap": "\\b250\\b",
+      "sub_process_request": "\\b(?:10|ten) days"
+    },
+    "forbidden": {
+      "check_the_book": "check the (?:book|handbook)",
+      "decision_leak": "^\\s*DECISION:"
+    }
+  },
+  "s2": {
+    "question": "can I carry over all my vacation days",
+    "note": "Sample corpus. A short yes/no question with a stated limit.",
+    "required": {
+      "position": "\\bno\\b|not all|only (?:up to )?(?:5|five)|advis\\w* against|never",
+      "limit_5": "\\b(?:5|five)\\b",
+      "source": "workshop|handbook|\\b(?:19|20)\\d\\d\\b"
+    },
+    "forbidden": {
+      "check_the_book": "check the (?:book|handbook)",
+      "decision_leak": "^\\s*DECISION:"
+    }
+  },
+  "s3": {
+    "question": "how many days a week can I work from home",
+    "note": "Sample corpus. An alias (work from home = remote work) and a value that changed between two dated sources.",
+    "required": {
+      "value_2021": "\\b(?:2|two) days",
+      "value_2023": "\\b(?:3|three) days",
+      "both_dates": "2021[\\s\\S]*2023|2023[\\s\\S]*2021"
+    },
+    "forbidden": {
+      "abroad_mixed_in": "(?:abroad|another country)[^\\n]{0,80}\\b(?:2|3|two|three) days a week",
+      "decision_leak": "^\\s*DECISION:",
+      "never_said": "\\b(?:he|she|the author|the speaker) never (?:said|says|mentioned|mentions)\\b"
+    }
+  },
+  "s4": {
+    "question": "setting up direct deposit, or getting paid faster on the regular expense report",
+    "note": "Sample corpus. A practical how-to with an alias (expense report = expense claim) and a community record whose attributed statement a primary passage confirms.",
+    "required": {
+      "direct_deposit": "direct deposit",
+      "twice_as_fast": "twice as fast",
+      "two_weeks": "two weeks|2 weeks|14 days",
+      "community_labeled": "communit"
+    },
+    "forbidden": {
+      "check_the_book": "check the (?:book|handbook)",
+      "decision_leak": "^\\s*DECISION:",
+      "member_named": "member_[abc]"
+    }
+  },
+  "s5": {
+    "question": "I have to fly out tomorrow for an urgent customer repair, can I skip the travel request",
+    "note": "Sample corpus. Advice given to one person; the answer should name her situation and say whether it matches the user's.",
+    "required": {
+      "individual_case": "one (?:person|employee|colleague)|for her|individual",
+      "urgent_repair": "urgent|emergency",
+      "cited": "\\[h?\\d+\\]"
+    },
+    "forbidden": {
+      "decision_leak": "^\\s*DECISION:",
+      "never_said": "\\b(?:he|she|the author|the speaker) never (?:said|says|mentioned|mentions)\\b"
+    }
+  },
+  "s6": {
+    "question": "do sick days use up my vacation days",
+    "note": "Sample corpus. A comparative statement (2022) and a later condition (2023) that must be reconciled, not left side by side.",
+    "required": {
+      "comparison": "unpaid leave",
+      "later_condition": "more than 10|over 10|beyond|come out of|taken from",
+      "cited": "\\[h?\\d+\\]"
+    },
+    "forbidden": {
+      "decision_leak": "^\\s*DECISION:",
+      "manufactured_threshold": "normal amounts|only in excess|safe amounts"
+    }
+  }
+}
