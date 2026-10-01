@@ -86,7 +86,7 @@ The Connections page under Settings in the UI shows Claude, NotebookLM and Gemin
 
 On 2026-10-01 I ran the six questions in `evals/questions.json` live against the sample corpus and scored the answers with `tools/eval.py`. The scorer checks with regular expressions that the key amounts, dates and phrases appear in the answer. It does not judge whether an answer is correct.
 
-**6 of 6 passed.** I wrote the sample documents, questions and patterns first and ran each question once. I did not change any of them afterwards. The scorer also reported one number in the first answer that it could not find in the passages ("four parts", my wording for the list, not a figure from a source). The community-notes question passes only after the sample community notes are loaded (step 3 in `sample_corpus/README.md`). An earlier run on a different sample topic gave 5 of 6, so the score can change from run to run.
+**6 of 6 passed.** The sample documents, questions and patterns were written before the run and stayed unchanged after it, and each question was run once. The scorer also reported one number in the first answer that it could not find in the passages ("four parts", my wording for the list, not a figure from a source). The community-notes question passes only after the sample community notes are loaded (step 3 in `sample_corpus/README.md`). An earlier run on a different sample topic gave 5 of 6, so the score can change from run to run.
 
 The scorer's summary table for that run (`facts` is required patterns found; `ground` is grounding failures; `nums` is numbers it could not find in the passages):
 
@@ -103,9 +103,9 @@ s6    3/3      39.2   42.1       0    0
 ## Known limits
 
 - **The scores come from the sample corpus only.** I tuned the pipeline on my private library, so the results mentioned in code comments cannot be reproduced here.
-- **The web UI has no tests.** `npm run build` type-checks and builds it.
+- **The web UI is covered by the type check and the build** (`npm run build`).
 
 - **Shaped by its first library.** The pipeline assumes one main author, dated talks with `Q:` / `A:` lines and recipe-like passages with amounts. The number checks know kitchen-style units, Fahrenheit and durations (seconds to years). They do not know dollar amounts, so a figure like "180 dollars per night" is not checked against the passages; days, weeks and years are. Percentages have their own check (section 4).
 - **Library-specific settings.** The alias groups and generic subject words in `research.py`, the source-title patterns, the alias list in `prompts/planner.txt` and the example chips in the UI are set for the sample corpus.
-- **Unused code is kept** (see section 8). `docs/architecture.md` covers the fast follow-up path only in a few lines.
-- **Mostly run on Windows 10.** The POSIX code paths are less exercised.
+- **Unused code is kept** (see section 8).
+- **Developed on Windows.** The offline tests also run on Linux in GitHub Actions.

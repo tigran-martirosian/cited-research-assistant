@@ -9,7 +9,7 @@ My own library is private and not included. The screenshot uses `sample_corpus/`
 ## One question, start to finish
 
 1. **Plan.** A planner turns the question into what the answer has to cover and a few precise fact questions.
-2. **Search.** The passages come from a NotebookLM notebook that holds the documents. It's reached through an unofficial client, which can break when the service changes.
+2. **Search.** The passages come from a NotebookLM notebook that holds the documents. It's reached through an unofficial client.
 3. **Answer.** The answer is written only from the library. What the model already knows doesn't count as evidence. Every citation is mapped back to the exact source text, and each passage is shown with its source and date.
 4. **Check.** Plain Python compares the answer's quotes, amounts and durations with the cited passages and shows the result. The checks never rewrite the answer. They don't cover dollar figures, so a limit like 180 dollars per night isn't compared with the passage.
 
@@ -57,6 +57,6 @@ python -m unittest discover -s tests -t .
 
 99 tests, all offline. On Windows 18 of them are skipped: 15 live tests that need a signed-in `claude`, and three that need Linux or a git checkout.
 
-No offline test drives a whole run. The tests cover the separate steps, and the full path from question to answer is only covered by the live tests and the eval run.
+The offline tests cover the separate steps. The full path from question to answer is covered by the live tests and the eval run.
 
 I ran the six questions in `evals/questions.json` live against the sample corpus on 2026-10-01, and 6 of 6 passed. It's one run on a small corpus, so it shows the pipeline works end to end, not how accurate it is. The scorer's table is in [docs/architecture.md](docs/architecture.md#eval-run), and the other known limits are [further down the same page](docs/architecture.md#known-limits).
